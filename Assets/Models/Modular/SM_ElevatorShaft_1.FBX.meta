@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d8e788347b366954186c637b02af4844
+guid: 38bbcbb90f49c5d45a23032ae0cc9139
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material #157
-    second: {fileID: 2100000, guid: fbb62bda4d8204942ba9acbb54fdc9bb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: fbb62bda4d8204942ba9acbb54fdc9bb, type: 2}
+      name: Material #156
+    second: {fileID: 2100000, guid: 5ba7c415315e28e439db62aa4e056686, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -46,7 +41,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
