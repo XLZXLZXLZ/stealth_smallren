@@ -71,13 +71,22 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadNextLevelRoutine()
     {
-        var wipe = LevelWipePanel.Instance;
+        /*var wipe = LevelWipePanel.Instance;
         wipe.WipedDown = true;
 
         while (!wipe.IsFullyWiped)
         {
             yield return null;
+        }*/
+
+        Elevator.ExitElevator.GoUp();
+
+        while (!Elevator.ExitElevator.AreDoorsClosed())
+        {
+            yield return null;
         }
+
+        yield return new WaitForSeconds(2.5f);
 
         var level = m_Levels[m_LevelIndex];
         var asyncLoad = SceneManager.LoadSceneAsync(level.m_SceneName);
@@ -88,6 +97,9 @@ public class LevelManager : MonoBehaviour
         }
 
         this.SetupLevel();
+
+        var elevatorTarget = Object.FindObjectOfType<LevelElevatorTarget>();
+        Elevator.ExitElevator.SetNewDestination(elevatorTarget.transform.position);
 
         yield return new WaitForSeconds(0.1f);
         LevelWipePanel.Instance.WipedDown = false;
