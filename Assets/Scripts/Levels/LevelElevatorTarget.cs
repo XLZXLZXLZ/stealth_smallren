@@ -17,6 +17,6 @@ public class LevelElevatorTarget : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
-        Gizmos.DrawCube(transform.position, new Vector3(4f, .1f, 4f));
+        Gizmos.DrawCube(transform.position, new Vector3(5f, .1f, 5f));
     }
 }
