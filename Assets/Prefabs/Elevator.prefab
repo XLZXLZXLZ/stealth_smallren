@@ -1373,10 +1373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1315d73de5ea7049a25eff0deb88f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 5
+  m_Speed: 30
   m_Acceleration: 1
   m_StartOpen: 0
-  m_ActivationCount: 2
+  m_ActivationCount: 1
   m_RightDoor1: {fileID: 5660968836368566340}
   m_LeftDoor1: {fileID: 5660968836714956135}
   m_RightDoor2: {fileID: 5660968836558998513}

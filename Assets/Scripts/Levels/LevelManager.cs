@@ -86,7 +86,7 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4.5f);
 
         var level = m_Levels[m_LevelIndex];
         var asyncLoad = SceneManager.LoadSceneAsync(level.m_SceneName);
