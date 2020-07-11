@@ -582,8 +582,8 @@ MonoBehaviour:
   m_CameraZoomSmoothing: 8
   m_MinZoom: 6
   m_MaxZoom: 9
-  m_CameraMaxPitch: 40
-  m_CameraMinPitch: 40
+  m_CameraMaxPitch: 50
+  m_CameraMinPitch: 50
   m_KeyMovement: -0.12
 --- !u!54 &5453329590280049657
 Rigidbody:

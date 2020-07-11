@@ -63,7 +63,11 @@ public class LevelManager : MonoBehaviour
         if (m_LevelIndex >= 0)
         {
             var singleLevelManager = Object.FindObjectOfType<SingleLevelManager>();
-            singleLevelManager.m_LevelName = m_Levels[m_LevelIndex].m_Name;
+
+            if (singleLevelManager != null)
+            {
+                singleLevelManager.m_LevelName = m_Levels[m_LevelIndex].m_Name;
+            }
         }
 
         SoundManager.Instance.SetMusicType(SoundManager.Instance.m_DefaultMusicType);
