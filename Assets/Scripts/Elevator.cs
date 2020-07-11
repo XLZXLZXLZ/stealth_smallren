@@ -8,16 +8,26 @@ public class Elevator : MonoBehaviour
 
     public float m_Speed;
     public float m_Acceleration;
+    public bool m_StartOpen;
+    public int m_ActivationCount;
     public Door m_RightDoor1;
     public Door m_LeftDoor1;
     public Door m_RightDoor2;
     public Door m_LeftDoor2;
     public AudioSource m_DoorAudio;
+    public AudioSource m_StartSound;
+    public AudioSource m_LoopSound;
+    public AudioSource m_StopSound;
 
     private float m_CurrentSpeed;
     private Vector3 m_TargetPosition;
     private bool m_GoingUp;
     private bool m_Finished;
+    private int m_NumActivations;
+    private bool m_Moving;
+    private float m_StartMovingTime;
+    private float m_LastSpeed;
+    private bool m_IsSlowingDown;
 
     private void Awake()
     {
@@ -29,13 +39,27 @@ public class Elevator : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         m_TargetPosition = transform.position;
+
+        if (m_StartOpen)
+        {
+            m_LeftDoor1.Open();
+            m_RightDoor1.Open();
+        }
     }
 
     private void Update()
     {
         var targetSpeed = 0f;
 
-        if (!this.AreDoorsClosed())
+        if (!m_Finished && m_NumActivations >= m_ActivationCount && !m_LeftDoor1.IsOpen)
+        {
+            m_LeftDoor1.Open();
+            m_RightDoor1.Open();
+
+            m_DoorAudio.Play();
+        }
+
+        if (!m_Finished || !this.AreDoorsClosed())
         {
             return;
         }
@@ -52,9 +76,31 @@ public class Elevator : MonoBehaviour
             m_CurrentSpeed = Mathf.Clamp(diffY * 2f, -m_Speed, m_Speed);
         }
 
-        var increase = new Vector3(0f, m_CurrentSpeed * Time.deltaTime, 0f);
+        if (m_CurrentSpeed < m_LastSpeed)
+        {
+            m_IsSlowingDown = true;
+        }
 
-        if (increase.magnitude <= 0.0001f)
+        var increase = new Vector3(0f, m_CurrentSpeed * Time.deltaTime, 0f);
+        var moving = increase.magnitude > 0.001f;
+
+        if (moving != m_Moving && !m_IsSlowingDown)
+        {
+            if (m_LoopSound.isPlaying)
+            {
+                m_LoopSound.Stop();
+            }
+
+            if (moving)
+            {
+                m_StartSound.Play();
+                m_StartMovingTime = Time.time;
+            }
+
+            m_Moving = moving;
+        }
+
+        if (!moving)
         {
             if (!m_GoingUp)
             {
@@ -73,7 +119,22 @@ public class Elevator : MonoBehaviour
 
             return;
         }
+           
+        if (m_IsSlowingDown)
+        {
+            if (m_LoopSound.isPlaying)
+            {
+                m_LoopSound.Stop();
+                m_StopSound.Play();
+            }
+        }
+        else if (!m_LoopSound.isPlaying && Time.time - m_StartMovingTime > m_StartSound.clip.length)
+        {
+            m_LoopSound.Play();
+            m_StartSound.Stop();
+        }
 
+        m_LastSpeed = m_CurrentSpeed;
         var distance = Vector3.Distance(m_TargetPosition, transform.position);
 
         transform.position += increase;
@@ -87,6 +148,11 @@ public class Elevator : MonoBehaviour
                 m_CurrentSpeed = 0f;
             }
         }
+    }
+
+    public void AddActivation()
+    {
+        m_NumActivations++;
     }
 
     public void FinishLevel()
@@ -116,6 +182,8 @@ public class Elevator : MonoBehaviour
         m_LeftDoor2.Close();
         m_RightDoor1.Close();
         m_RightDoor2.Close();
+
+        m_IsSlowingDown = false;
 
         m_DoorAudio.Play();
     }

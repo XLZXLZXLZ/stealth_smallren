@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 2a399bee9b0d364488b826d4e4a0a100
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DOCKER
+  fontNames:
+  - DOCKER
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 68e9c7b37d8c73144b56c0a66f647173, type: 3}
+  - {fileID: 12800000, guid: 00802a7d88f6f2b4cb515b5800ec78a1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
