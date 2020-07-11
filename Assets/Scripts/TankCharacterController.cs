@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankCharacterController : MonoBehaviour
 {
+    public static TankCharacterController Instance;
+
     [Header("Setup")]
     public GameObject m_CameraObject;
     public GameObject m_VisualElements;
@@ -37,6 +39,9 @@ public class TankCharacterController : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        Instance = this;
+
         m_Rigidbody = this.GetComponent<Rigidbody>();
         m_CameraZoom = (m_MinZoom + m_MaxZoom) * 0.35f;
         m_CameraTargetZoom = m_CameraZoom;
@@ -93,11 +98,11 @@ public class TankCharacterController : MonoBehaviour
     private void ProcessVisualElements()
     {
         var direction = m_Rigidbody.velocity;
+        direction.y = 0f;
+        direction = direction.normalized;
 
-        if (direction != Vector3.zero)
+        if (direction.magnitude > 0f)
         {
-            direction.y = 0f;
-            direction = direction.normalized;
             m_CurrentVisualRotationTarget = Quaternion.LookRotation(direction);
         }
 

@@ -556,8 +556,8 @@ MonoBehaviour:
   m_CameraSmoothing: 13
   m_CameraZoomSensitivity: 2
   m_CameraZoomSmoothing: 8
-  m_MinZoom: 5
-  m_MaxZoom: 8
+  m_MinZoom: 7
+  m_MaxZoom: 11
   m_CameraMaxPitch: 89
   m_CameraMinPitch: 25
 --- !u!54 &5453329590280049657
