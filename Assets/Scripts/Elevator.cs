@@ -12,6 +12,7 @@ public class Elevator : MonoBehaviour
     public Door m_LeftDoor1;
     public Door m_RightDoor2;
     public Door m_LeftDoor2;
+    public AudioSource m_DoorAudio;
 
     private float m_CurrentSpeed;
     private Vector3 m_TargetPosition;
@@ -66,6 +67,8 @@ public class Elevator : MonoBehaviour
                 {
                     m_LeftDoor2.Open();
                 }
+
+                m_DoorAudio.Play();
             }
 
             return;
@@ -113,6 +116,8 @@ public class Elevator : MonoBehaviour
         m_LeftDoor2.Close();
         m_RightDoor1.Close();
         m_RightDoor2.Close();
+
+        m_DoorAudio.Play();
     }
 
     public void SetNewDestination(Vector3 destination)
