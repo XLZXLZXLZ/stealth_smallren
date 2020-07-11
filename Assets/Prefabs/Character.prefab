@@ -559,7 +559,7 @@ MonoBehaviour:
   m_MinZoom: 7
   m_MaxZoom: 11
   m_CameraMaxPitch: 89
-  m_CameraMinPitch: 25
+  m_CameraMinPitch: 40
 --- !u!54 &5453329590280049657
 Rigidbody:
   m_ObjectHideFlags: 0
