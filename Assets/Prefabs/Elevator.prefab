@@ -1374,7 +1374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 30
-  m_Acceleration: 1
+  m_Acceleration: 0.3
   m_StartOpen: 0
   m_ActivationCount: 1
   m_RightDoor1: {fileID: 5660968836368566340}
