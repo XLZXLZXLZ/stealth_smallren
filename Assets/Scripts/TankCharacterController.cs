@@ -9,9 +9,12 @@ public class TankCharacterController : MonoBehaviour
     [Header("Setup")]
     public GameObject m_CameraObject;
     public GameObject m_VisualElements;
+    public GameObject m_KeyObject;
+    public AudioSource[] m_KeySounds;
 
     [Header("Movement")]
     public float m_MovementSpeed = 10f;
+    public float m_MovementSpeedCrouch = 5f;
     public float m_Acceleration = 1f;
     public float m_VisualRotationSpeed = 20f;
 
@@ -25,6 +28,10 @@ public class TankCharacterController : MonoBehaviour
     public float m_CameraMaxPitch = 89f;
     public float m_CameraMinPitch = 25;
 
+    [Header("Misc")]
+    public float m_KeyMovement = -0.2f;
+
+    private bool m_Crouched;
     private Quaternion m_CurrentVisualRotationTarget;
     private Vector3 m_InputMovementVector;
     private Vector2 m_CameraAngle = new Vector2(45f, 0f);
@@ -34,8 +41,14 @@ public class TankCharacterController : MonoBehaviour
     private float m_CameraZoom;
     private float m_CameraTargetZoom;
     private Quaternion m_CurrentVisualRotation;
+    private Vector3 m_OriginalKeyPosition;
+    private Vector3 m_CurrentKeyPosition;
 
     private Rigidbody m_Rigidbody;
+    private Animator m_Animator;
+
+    public float MovementSpeed
+        => m_Crouched ? m_MovementSpeedCrouch : m_MovementSpeed;
 
     private void Start()
     {
@@ -46,6 +59,11 @@ public class TankCharacterController : MonoBehaviour
         m_CameraZoom = (m_MinZoom + m_MaxZoom) * 0.35f;
         m_CameraTargetZoom = m_CameraZoom;
         m_CameraTargetAngle = m_CameraAngle;
+
+        m_OriginalKeyPosition = m_KeyObject.transform.localPosition;
+        m_CurrentKeyPosition = m_OriginalKeyPosition;
+
+        m_Animator = this.GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -53,6 +71,7 @@ public class TankCharacterController : MonoBehaviour
         this.ProcessInput();
         this.ProcessCamera();
         this.ProcessVisualElements();
+        this.UpdateAnimator();
     }
 
     private void FixedUpdate()
@@ -60,8 +79,25 @@ public class TankCharacterController : MonoBehaviour
         this.ProcessMovement();
     }
 
+    private void UpdateAnimator()
+    {
+        var visualRotationVector = m_CurrentVisualRotation * Vector3.forward;
+        var forwardSpeed = m_Rigidbody.velocity.magnitude * Vector3.Dot(m_Rigidbody.velocity.normalized, visualRotationVector);
+
+        m_Animator.SetFloat("ForwardSpeed", Mathf.Clamp(forwardSpeed / this.MovementSpeed, 0f, 1f));
+        m_Animator.SetBool("Crouched", m_Crouched);
+    }
+
     private void ProcessInput()
     {
+        m_Crouched = Input.GetButton("Crouch");
+
+        if (Input.GetButtonDown("Crouch"))
+        {
+            var sound = m_KeySounds[(int)Random.Range(0f, m_KeySounds.Length)];
+            sound.Play();
+        }
+
         var forward = Input.GetAxis("Vertical");
         var right = Input.GetAxis("Horizontal");
 
@@ -71,7 +107,7 @@ public class TankCharacterController : MonoBehaviour
 
         m_InputMovementVector = forwardVector * forward + rightVector * right;
         m_InputMovementVector = m_InputMovementVector.normalized;
-        m_InputMovementVector.Scale(new Vector3(m_MovementSpeed, m_MovementSpeed, m_MovementSpeed));
+        m_InputMovementVector.Scale(new Vector3(this.MovementSpeed, this.MovementSpeed, this.MovementSpeed));
 
         var mouseX = Input.GetAxis("Mouse X");
         var mouseY = Input.GetAxis("Mouse Y");
@@ -97,6 +133,10 @@ public class TankCharacterController : MonoBehaviour
 
     private void ProcessVisualElements()
     {
+        var keyTarget = m_Crouched ? m_OriginalKeyPosition + new Vector3(0f, 0f, 1f) * m_KeyMovement : m_OriginalKeyPosition;
+        m_CurrentKeyPosition += (keyTarget - m_CurrentKeyPosition) * Time.deltaTime * 12f;
+        m_KeyObject.transform.localPosition = m_CurrentKeyPosition;
+
         var direction = m_Rigidbody.velocity;
         direction.y = 0f;
         direction = direction.normalized;
