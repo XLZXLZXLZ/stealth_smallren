@@ -21,6 +21,11 @@ public class EnemyController : MonoBehaviour
     private bool waypointsReversed;
     private float currentWaypointWaitTime;
 
+    // Animations
+    private Vector3 lastPosition;
+    private float currentVelocity;
+    private Animator animator;
+
     // Patrolling
     private NavMeshPath patrollingPath;
     private int patrollingPathCornerIndex;
@@ -56,6 +61,8 @@ public class EnemyController : MonoBehaviour
 
         pathToPlayerLastSeen = new NavMeshPath();
         returnToPatrollingPath = new NavMeshPath();
+
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -189,6 +196,30 @@ public class EnemyController : MonoBehaviour
             var targetRotation = Quaternion.LookRotation(lookDirection, this.transform.up);
             var degreeDiff = Quaternion.Angle(this.transform.rotation, targetRotation);
             this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * degreeDiff);
+        }
+
+        this.UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        var distance = Vector3.Distance(this.transform.position, lastPosition);
+        lastPosition = this.transform.position;
+        var velocity = distance / Time.deltaTime;
+
+        currentVelocity += (velocity - currentVelocity) * Time.deltaTime * 2f;
+        Debug.Log("currentVelocity " + currentVelocity);
+        if (currentVelocity <= patrollingSpeed)
+        {
+            var speed = Mathf.Lerp(0f, .5f, Mathf.Clamp(currentVelocity / patrollingSpeed, 0f, 1f));
+            Debug.Log("speed " + speed);
+            animator.SetFloat("Speed", speed);
+        }
+        else
+        {
+            var speed = Mathf.Lerp(.5f, 1f, Mathf.Clamp((currentVelocity + patrollingSpeed) / (patrollingSpeed - patrollingSpeed), 0f, 1f));
+            Debug.Log("speed2 " + speed);
+            animator.SetFloat("Speed", speed);
         }
     }
 

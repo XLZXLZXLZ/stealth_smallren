@@ -47,10 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   looping: 1
-  coneOfVisionAngle: 135
-  coneOfVisionDistance: 4
+  coneOfVisionAngle: 170
+  coneOfVisionDistance: 12
   patrollingSpeed: 1
-  chasingSpeed: 2
+  chasingSpeed: 3
   lostPlayerWaitTime: 2
   rotationSpeed: 10
 --- !u!114 &3115600706388242914
