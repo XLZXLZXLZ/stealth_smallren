@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#pragma warning disable 649
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.HighDefinition;
@@ -111,3 +111,5 @@ public class Prisoner : MonoBehaviour
         }
     }
 }
+
+#pragma warning restore 649
