@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public MusicSource[] m_Music;
 
     private MusicType m_MusicType;
+    private float m_LastChaseCheck;
 
     private void Awake()
     {
@@ -29,6 +30,33 @@ public class SoundManager : MonoBehaviour
         {
             this.HandleAudioSource(source, m_MusicType == source.m_MusicType);
         }
+
+        if (TankCharacterController.Instance != null
+            && TankCharacterController.Instance.Alive
+            && Time.time - m_LastChaseCheck > 0.2)
+        {
+            m_LastChaseCheck = Time.time;
+            var enemies = Object.FindObjectsOfType<EnemyController>();
+            var chasing = false;
+
+            foreach (var enemy in enemies)
+            {
+                if (enemy.EnemyState == EnemyState.Chasing || enemy.EnemyState == EnemyState.Searching)
+                {
+                    chasing = true;
+                    break;
+                }
+            }
+
+            if (chasing && m_MusicType != MusicType.Chase)
+            {
+                this.SetMusicType(MusicType.Chase);
+            }
+            else if (!chasing && m_MusicType == MusicType.Chase)
+            {
+                this.SetMusicType(m_DefaultMusicType);
+            }
+        }
     }
 
     public void SetMusicType(MusicType type)
@@ -39,7 +67,7 @@ public class SoundManager : MonoBehaviour
     private void HandleAudioSource(MusicSource source, bool enabled)
     {
         var target = enabled ? source.m_Volume : 0f;
-        source.m_CurrentVolume += (target - source.m_CurrentVolume) * Time.deltaTime;
+        source.m_CurrentVolume += (target - source.m_CurrentVolume) * Time.deltaTime * 2f;
 
         if (Mathf.Abs(target - source.m_CurrentVolume) < 0.01f)
         {

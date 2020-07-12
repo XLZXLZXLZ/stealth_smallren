@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
 
     // Animations
     private Vector3 lastPosition;
-    private float currentVelocity;
+    private float currentAnimatorSpeed;
     private Animator animator;
 
     // Patrolling
@@ -43,6 +43,9 @@ public class EnemyController : MonoBehaviour
     // Returning
     private NavMeshPath returnToPatrollingPath;
     private Vector3 returnToPatrollingPathPosition;
+
+    public EnemyState EnemyState
+        => state;
 
     private void Start()
     {
@@ -217,18 +220,20 @@ public class EnemyController : MonoBehaviour
         var distance = Vector3.Distance(this.transform.position, lastPosition);
         lastPosition = this.transform.position;
         var velocity = distance / Time.deltaTime;
+        var animatorSpeed = 0f;
 
-        currentVelocity += (velocity - currentVelocity) * Time.deltaTime * 2f;
-        if (currentVelocity <= patrollingSpeed)
+        if (velocity <= patrollingSpeed)
         {
-            var speed = Mathf.Lerp(0f, .5f, Mathf.Clamp(currentVelocity / patrollingSpeed, 0f, 1f));
-            animator.SetFloat("Speed", speed);
+            animatorSpeed = Mathf.Lerp(0f, .5f, Mathf.Clamp(velocity / patrollingSpeed, 0f, 1f));
         }
         else
         {
-            var speed = Mathf.Lerp(.5f, 1f, Mathf.Clamp((currentVelocity + patrollingSpeed) / (patrollingSpeed - patrollingSpeed), 0f, 1f));
-            animator.SetFloat("Speed", speed);
+            animatorSpeed = Mathf.Lerp(.5f, 1f, Mathf.Clamp((velocity + patrollingSpeed) / (patrollingSpeed - patrollingSpeed), 0f, 1f));
         }
+
+        currentAnimatorSpeed += (animatorSpeed - currentAnimatorSpeed) * Time.deltaTime * 2f;
+
+        animator.SetFloat("Speed", currentAnimatorSpeed);
     }
 
     private Vector3 GetPlayerNavPosition()

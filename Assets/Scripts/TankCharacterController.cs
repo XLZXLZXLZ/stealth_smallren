@@ -86,6 +86,8 @@ public class TankCharacterController : MonoBehaviour
     public void Kill()
     {
         m_Alive = false;
+
+        SoundManager.Instance.SetMusicType(MusicType.Death);
     }
 
     public void Revive()

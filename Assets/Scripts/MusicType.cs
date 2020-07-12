@@ -2,4 +2,5 @@
 {
     Sneak,
     Chase,
+    Death,
 }
