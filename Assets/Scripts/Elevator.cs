@@ -5,6 +5,7 @@ using UnityEngine;
 public class Elevator : MonoBehaviour
 {
     public static Elevator LastSpawnedElevator;
+    public static Elevator LastEnterElevator;
     public static Elevator ExitElevator;
     public static Elevator PrevExitElevator;
 
@@ -234,6 +235,8 @@ public class Elevator : MonoBehaviour
         }
 
         m_TargetPosition = destination;
+
+        LastEnterElevator = this;
     }
 
     private void OnLevelWasLoaded(int level)

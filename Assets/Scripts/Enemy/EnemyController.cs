@@ -199,6 +199,12 @@ public class EnemyController : MonoBehaviour
             this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * degreeDiff);
         }
 
+        var distanceToPlayer = Vector3.Distance(TankCharacterController.Instance.transform.position, transform.position);
+        if (distanceToPlayer <= 1.2f)
+        {
+            TankCharacterController.Instance.Kill();
+        }
+
         this.UpdateAnimator();
     }
 
@@ -275,6 +281,11 @@ public class EnemyController : MonoBehaviour
     private bool CanSeePlayer()
     {
         if (!this.IsPlayerWithinDistance() || !this.IsPlayerWithinRadius())
+        {
+            return false;
+        }
+
+        if (!TankCharacterController.Instance.Alive)
         {
             return false;
         }
