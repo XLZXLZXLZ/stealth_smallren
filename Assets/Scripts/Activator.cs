@@ -12,6 +12,9 @@ public class Activator : MonoBehaviour
 
     private bool m_Activated;
 
+    public bool Activated
+        => m_Activated;
+
     void Start()
     {
         
