@@ -53,8 +53,8 @@ public class EscapeMenu : MonoBehaviour
 
         m_Open = true;
         m_EscapeMenu.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
 
+        GameManager.Instance.UnlockCursor();
         GameManager.Instance.Pause();
     }
 
@@ -62,8 +62,8 @@ public class EscapeMenu : MonoBehaviour
     {
         m_Open = false;
         m_EscapeMenu.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
 
+        GameManager.Instance.LockCursor();
         GameManager.Instance.Unpause();
     }
 

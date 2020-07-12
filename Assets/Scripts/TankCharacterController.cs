@@ -69,7 +69,7 @@ public class TankCharacterController : MonoBehaviour
 
         m_Animator = this.GetComponentInChildren<Animator>();
 
-        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Instance.LockCursor();
     }
 
     private void Update()
