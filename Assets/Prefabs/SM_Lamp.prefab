@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7974933354314692138}
   - component: {fileID: 6414106860262553999}
   - component: {fileID: 9144430938850626885}
+  - component: {fileID: -8050064783291651641}
   m_Layer: 0
   m_Name: SM_Lamp
   m_TagString: Untagged
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &-8050064783291651641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342968616811703440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d15ab904066762c4eab4cacf3feab5f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_VisibilityDistance: 3.5
 --- !u!1 &7576777356899846728
 GameObject:
   m_ObjectHideFlags: 0
