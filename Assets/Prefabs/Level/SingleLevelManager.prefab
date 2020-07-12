@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3845020367613330921
+--- !u!1 &3295522335179762081
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2990744526671493068}
-  - component: {fileID: 5768360503573268846}
+  - component: {fileID: 3295522335179762087}
+  - component: {fileID: 3295522335179762086}
   m_Layer: 0
   m_Name: SingleLevelManager
   m_TagString: Untagged
@@ -17,30 +17,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2990744526671493068
+--- !u!4 &3295522335179762087
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3845020367613330921}
+  m_GameObject: {fileID: 3295522335179762081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.793144, y: -5.3513927, z: -18.592297}
+  m_LocalPosition: {x: -8.948699, y: 5.636474, z: -12.031893}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5768360503573268846
+--- !u!114 &3295522335179762086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3845020367613330921}
+  m_GameObject: {fileID: 3295522335179762081}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddf99a81305465140ae2b7f47e565deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ElevatorPrefab: {fileID: 5660968836372393378, guid: 2084bc0cabc141341b0b125e5d3718c1,
+    type: 3}
+  m_PlayerPrefab: {fileID: 1428130461821568779, guid: f53033088cc502741b313cc958d4f3e3,
+    type: 3}
+  m_LevelManagerPrefab: {fileID: 6007208995122635019, guid: 182d31f874b1aab48a138913c3433327,
+    type: 3}
+  m_GameManagerPrefab: {fileID: 3831262462221893811, guid: 01d9c11ae3859c54099a86894a28215b,
+    type: 3}
+  m_SoundManagerPrefab: {fileID: 4896502330637704077, guid: 616669d19a30f9043b4bd42b4dbff1e1,
+    type: 3}
   m_LevelName: 

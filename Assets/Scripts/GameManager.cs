@@ -22,13 +22,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void CycleLevel()
+    public void CycleLevel(int levels)
     {
-        m_SelectedLevel++;
+        m_SelectedLevel = Mathf.Max(0, m_SelectedLevel + levels);
 
         if (!this.LevelUnlocked(m_SelectedLevel))
         {
-            m_SelectedLevel = 0;
+            m_SelectedLevel--;
         }
     }
 

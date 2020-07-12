@@ -18,7 +18,12 @@ public class LevelWipePanel : MonoBehaviour
     public bool WipedDown { get; set; }
 
     private void Start()
-    {
+    { 
+        if (m_Image == null)
+        {
+            return;
+        }
+
         if (LevelManager.Instance.LevelIndex >= 0)
         {
             this.WipedDown = true;
@@ -40,6 +45,11 @@ public class LevelWipePanel : MonoBehaviour
         if (Mathf.Abs(target - m_WipeAmount) <= 0.01f)
         {
             m_WipeAmount = target;
+        }
+
+        if (m_Image == null)
+        {
+            return;
         }
 
         m_Image.fillAmount = m_WipeAmount;

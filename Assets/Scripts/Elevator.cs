@@ -31,14 +31,12 @@ public class Elevator : MonoBehaviour
 
     private void Awake()
     {
-        
+        m_TargetPosition = transform.position;
     }
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        m_TargetPosition = transform.position;
 
         if (m_StartOpen)
         {
@@ -72,7 +70,6 @@ public class Elevator : MonoBehaviour
         else
         {
             var diffY = m_TargetPosition.y - transform.position.y;
-
             m_CurrentSpeed = Mathf.Clamp(diffY * 2f, -m_Speed, m_Speed);
         }
 
@@ -170,6 +167,11 @@ public class Elevator : MonoBehaviour
         manager.LoadNextLevel();
     }
 
+    public void SetFinishedPreviously()
+    {
+        m_Finished = true;
+    }
+
     public bool AreDoorsClosed()
     {
         return m_LeftDoor1.IsFullyClosed && m_RightDoor1.IsFullyClosed && m_LeftDoor2.IsFullyClosed && m_RightDoor2.IsFullyClosed;
@@ -190,12 +192,21 @@ public class Elevator : MonoBehaviour
 
     public void SetNewDestination(Vector3 destination)
     {
-        var pPos = TankCharacterController.Instance.transform.position - transform.position;
+        var player = TankCharacterController.Instance;
+        var pPos = Vector3.zero;
+
+        if (player != null)
+        {
+            pPos = TankCharacterController.Instance.transform.position - transform.position;
+        }
 
         transform.position = destination - new Vector3(0f, 10f, 0f);
         m_GoingUp = false;
 
-        TankCharacterController.Instance.transform.position = transform.position + pPos;
+        if (TankCharacterController.Instance != null)
+        {
+            TankCharacterController.Instance.transform.position = transform.position + pPos;
+        }
 
         m_TargetPosition = destination;
     }

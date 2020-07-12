@@ -106,7 +106,10 @@ public class LevelManager : MonoBehaviour
         Elevator.ExitElevator.SetNewDestination(elevatorTarget.transform.position);
 
         yield return new WaitForSeconds(0.1f);
-        LevelWipePanel.Instance.WipedDown = false;
+        if (LevelWipePanel.Instance != null)
+        {
+            LevelWipePanel.Instance.WipedDown = false;
+        }
     }
 }
 
