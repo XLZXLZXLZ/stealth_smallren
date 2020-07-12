@@ -52,6 +52,13 @@ public class LevelManager : MonoBehaviour
     {
         m_LevelIndex++;
 
+        if (m_LevelIndex >= m_Levels.Length)
+        {
+            Elevator.ExitElevator.GoUp();
+            ThanksScreen.Instance.Thank();
+            return;
+        }
+
         this.StartCoroutine(this.LoadNextLevelRoutine());
     }
 
