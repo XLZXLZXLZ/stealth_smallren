@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     [Space(5)]
     [SerializeField] private float coneOfVisionAngle = 135f;
     [SerializeField] private float coneOfVisionDistance = 4f;
+    [SerializeField] private float maxInstinctualDistance = 2f;
     [SerializeField] private float patrollingSpeed = 1f;
     [SerializeField] private float chasingSpeed = 2f;
     [SerializeField] private float lostPlayerWaitTime = 2f;
@@ -191,12 +192,15 @@ public class EnemyController : MonoBehaviour
         }
 
         // Setting the rotation
-        var lookDirection = (target - this.transform.position).normalized;
-        if (lookDirection != Vector3.zero)
+        if (state != EnemyState.Searching)
         {
-            var targetRotation = Quaternion.LookRotation(lookDirection, this.transform.up);
-            var degreeDiff = Quaternion.Angle(this.transform.rotation, targetRotation);
-            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * degreeDiff);
+            var lookDirection = (target - this.transform.position).normalized;
+            if (lookDirection != Vector3.zero)
+            {
+                var targetRotation = Quaternion.LookRotation(lookDirection, this.transform.up);
+                var degreeDiff = Quaternion.Angle(this.transform.rotation, targetRotation);
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * degreeDiff);
+            }
         }
 
         this.UpdateAnimator();
@@ -274,6 +278,11 @@ public class EnemyController : MonoBehaviour
 
     private bool CanSeePlayer()
     {
+        if (Vector3.Distance(this.transform.position, this.GetPlayerNavPosition()) <= maxInstinctualDistance)
+        {
+            return true;
+        }
+
         if (!this.IsPlayerWithinDistance() || !this.IsPlayerWithinRadius())
         {
             return false;
