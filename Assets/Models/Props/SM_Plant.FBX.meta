@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce60fc44bb61ba54785792b0eb77d4aa
+guid: 53f66858f00cc3649ac5efcc1279b190
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Standardmaterial
-    second: {fileID: 2100000, guid: 8c0984dd27fafe94685c3e3ae5afc3bb, type: 2}
+      name: Material #156
+    second: {fileID: 2100000, guid: 3d969278bd8532649a6b53b478a610c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #157
+    second: {fileID: 2100000, guid: a5423a626a6555443bb30d63fc5a8996, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -41,7 +46,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
@@ -71,7 +76,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 1
+    blendShapeNormalImportMode: 0
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
