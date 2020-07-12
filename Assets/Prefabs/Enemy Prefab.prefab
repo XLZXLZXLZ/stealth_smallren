@@ -67,7 +67,7 @@ MonoBehaviour:
   waypoints: []
   looping: 1
   coneOfVisionAngle: 170
-  coneOfVisionDistance: 12
+  coneOfVisionDistance: 11
   maxInstinctualDistance: 2
   patrollingSpeed: 1
   chasingSpeed: 3
