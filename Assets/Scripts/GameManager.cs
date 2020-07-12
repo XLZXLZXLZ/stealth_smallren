@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public int m_SelectedLevel = 0;
 
+    private bool m_Paused;
+
+    public bool Paused
+        => m_Paused;
+
     private void Awake()
     {
         Instance = this;
@@ -22,6 +27,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        m_Paused = true;
+    }
+
+    public void Unpause()
+    {
+        Time.timeScale = 1f;
+        m_Paused = false;
+    }
+
     public void CycleLevel(int levels)
     {
         m_SelectedLevel = Mathf.Max(0, m_SelectedLevel + levels);
@@ -30,11 +47,14 @@ public class GameManager : MonoBehaviour
         {
             m_SelectedLevel--;
         }
+
+        LevelManager.Instance.SetLevel(m_SelectedLevel);
     }
 
     public void SelectLevel(int level)
     {
         m_SelectedLevel = level;
+        LevelManager.Instance.SetLevel(m_SelectedLevel);
     }
 
     public bool LevelUnlocked(int level)

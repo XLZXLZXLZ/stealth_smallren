@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
+    public static Elevator LastSpawnedElevator;
     public static Elevator ExitElevator;
     public static Elevator PrevExitElevator;
 
@@ -44,6 +45,8 @@ public class Elevator : MonoBehaviour
             m_LeftDoor1.Open();
             m_RightDoor1.Open();
         }
+
+        LastSpawnedElevator = this;
     }
 
     private void Update()
@@ -153,6 +156,20 @@ public class Elevator : MonoBehaviour
         m_NumActivations++;
     }
 
+    public void StartGame()
+    {
+        if (m_Finished)
+        {
+            return;
+        }
+
+        ExitElevator = this;
+        m_Finished = true;
+
+        var manager = Object.FindObjectOfType<LevelManager>();
+        manager.LoadCurrentLevel();
+    }
+
     public void FinishLevel()
     {
         if (m_Finished)
@@ -166,8 +183,9 @@ public class Elevator : MonoBehaviour
         }
 
         ExitElevator = this;
-
         m_Finished = true;
+
+        GameManager.Instance.UnlockLevel(LevelManager.Instance.LevelIndex + 1);
 
         var manager = Object.FindObjectOfType<LevelManager>();
         manager.LoadNextLevel();

@@ -90,6 +90,11 @@ public class TankCharacterController : MonoBehaviour
 
     private void ProcessInput()
     {
+        if (GameManager.Instance.Paused)
+        {
+            return;
+        }
+
         m_Crouched = Input.GetButton("Crouch");
 
         if (Input.GetButtonDown("Crouch"))

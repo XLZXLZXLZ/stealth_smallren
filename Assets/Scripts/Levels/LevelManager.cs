@@ -7,10 +7,15 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
+    public Level m_LobbyLevel = new Level()
+    {
+        m_Name = "Lobby",
+        m_SceneName = "MainMenu"
+    };
     public GameObject m_CharacterPrefab;
     public Level[] m_Levels;
 
-    private int m_LevelIndex = -1;
+    private int m_LevelIndex = 0;
     private LevelSpawnPoint m_SpawnPoint;
     private GameObject m_CharacterObject;
 
@@ -33,11 +38,60 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public void SetLevel(int level)
+    {
+        m_LevelIndex = level;
+    }
+
+    public void LoadCurrentLevel()
+    {
+        this.StartCoroutine(this.LoadNextLevelRoutine());
+    }
+
     public void LoadNextLevel()
     {
         m_LevelIndex++;
 
         this.StartCoroutine(this.LoadNextLevelRoutine());
+    }
+
+    public void LoadLobby()
+    {
+        m_LevelIndex = 0;
+
+        if (TankCharacterController.Instance != null)
+        {
+            Destroy(TankCharacterController.Instance.gameObject);
+        }
+
+        if (Elevator.ExitElevator != null)
+        {
+            Destroy(Elevator.ExitElevator.gameObject);
+        }
+
+        if (Elevator.PrevExitElevator != null)
+        {
+            Destroy(Elevator.PrevExitElevator.gameObject);
+        }
+
+        if (Elevator.LastSpawnedElevator != null)
+        {
+            Destroy(Elevator.LastSpawnedElevator.gameObject);
+        }
+
+        if (GameManager.Instance != null)
+        {
+            Destroy(GameManager.Instance.gameObject);
+        }
+
+        if (SoundManager.Instance != null)
+        {
+            Destroy(SoundManager.Instance.gameObject);
+        }
+
+        SceneManager.LoadScene(m_LobbyLevel.m_SceneName);
+
+        Destroy(gameObject);
     }
 
     private void SetupLevel()
