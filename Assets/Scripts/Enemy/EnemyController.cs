@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
         returnToPatrollingPath = new NavMeshPath();
 
         animator = gameObject.GetComponentInChildren<Animator>();
+        lastPosition = transform.position;
     }
 
     private void Update()
@@ -208,17 +209,14 @@ public class EnemyController : MonoBehaviour
         var velocity = distance / Time.deltaTime;
 
         currentVelocity += (velocity - currentVelocity) * Time.deltaTime * 2f;
-        Debug.Log("currentVelocity " + currentVelocity);
         if (currentVelocity <= patrollingSpeed)
         {
             var speed = Mathf.Lerp(0f, .5f, Mathf.Clamp(currentVelocity / patrollingSpeed, 0f, 1f));
-            Debug.Log("speed " + speed);
             animator.SetFloat("Speed", speed);
         }
         else
         {
             var speed = Mathf.Lerp(.5f, 1f, Mathf.Clamp((currentVelocity + patrollingSpeed) / (patrollingSpeed - patrollingSpeed), 0f, 1f));
-            Debug.Log("speed2 " + speed);
             animator.SetFloat("Speed", speed);
         }
     }
