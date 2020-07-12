@@ -69,7 +69,7 @@ public class ThanksScreen : MonoBehaviour
 
             m_Alpha = Mathf.Max(m_Alpha, color.a);
 
-            if (!m_GoneToLobby && deathDiff > 20f)
+            if (!m_GoneToLobby && deathDiff > 15f)
             {
                 m_GoneToLobby = true;
                 LevelManager.Instance.LoadLobby();
