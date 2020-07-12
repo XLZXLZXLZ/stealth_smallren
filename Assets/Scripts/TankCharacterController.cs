@@ -68,6 +68,8 @@ public class TankCharacterController : MonoBehaviour
         m_CurrentKeyPosition = m_OriginalKeyPosition;
 
         m_Animator = this.GetComponentInChildren<Animator>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
