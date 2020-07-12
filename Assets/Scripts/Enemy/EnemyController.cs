@@ -203,6 +203,12 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        var distanceToPlayer = Vector3.Distance(TankCharacterController.Instance.transform.position, transform.position);
+        if (distanceToPlayer <= 1.2f)
+        {
+            TankCharacterController.Instance.Kill();
+        }
+
         this.UpdateAnimator();
     }
 
@@ -284,6 +290,11 @@ public class EnemyController : MonoBehaviour
         }
 
         if (!this.IsPlayerWithinDistance() || !this.IsPlayerWithinRadius())
+        {
+            return false;
+        }
+
+        if (!TankCharacterController.Instance.Alive)
         {
             return false;
         }

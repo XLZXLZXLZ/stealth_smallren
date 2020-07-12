@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     public void SetLevel(int level)
@@ -53,6 +53,33 @@ public class LevelManager : MonoBehaviour
         m_LevelIndex++;
 
         this.StartCoroutine(this.LoadNextLevelRoutine());
+    }
+
+    public void ReloadLevel()
+    {
+        if (Elevator.LastSpawnedElevator != null && Elevator.LastSpawnedElevator != Elevator.LastEnterElevator)
+        {
+            Destroy(Elevator.LastSpawnedElevator.gameObject);
+        }
+
+        var level = m_Levels[m_LevelIndex];
+        SceneManager.LoadScene(level.m_SceneName);
+
+        if (TankCharacterController.Instance != null)
+        {
+            if (Elevator.ExitElevator != null)
+            {
+                TankCharacterController.Instance.transform.position = Elevator.ExitElevator.transform.position;
+            }
+            else if(Elevator.LastEnterElevator != null)
+            {
+                TankCharacterController.Instance.transform.position = Elevator.LastEnterElevator.transform.position;
+            }
+            
+            TankCharacterController.Instance.Revive();
+        }
+
+        SoundManager.Instance.SetMusicType(SoundManager.Instance.m_DefaultMusicType);
     }
 
     public void LoadLobby()

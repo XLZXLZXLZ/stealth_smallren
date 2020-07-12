@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class EscapeMenu : MonoBehaviour
 {
     public GameObject m_EscapeMenu;
+    public UnityEngine.UI.Text m_ResumeText;
     public UnityEngine.UI.Button m_ResumeButton;
     public UnityEngine.UI.Button m_LobbyButton;
     public UnityEngine.UI.Button m_QuitButton;
 
     private bool m_Open;
+    private float m_LastAlive;
 
     private void Start()
     {
@@ -23,6 +25,26 @@ public class EscapeMenu : MonoBehaviour
 
     private void Update()
     {
+        if (TankCharacterController.Instance.Alive)
+        {
+            m_LastAlive = Time.time;
+            m_ResumeText.text = "Resume";
+        }
+        else
+        {
+            m_ResumeText.text = "Restart";
+
+            if (Time.time - m_LastAlive > 2f)
+            {
+                this.Open();
+            }
+        }
+
+        if (TankCharacterController.Instance == null || !TankCharacterController.Instance.Alive)
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Pause"))
         {
             this.Toggle();
@@ -34,7 +56,10 @@ public class EscapeMenu : MonoBehaviour
         m_Open = true;
         m_EscapeMenu.SetActive(true);
 
-        GameManager.Instance.Pause();
+        if (TankCharacterController.Instance.Alive)
+        {
+            GameManager.Instance.Pause();
+        }
     }
 
     public void Close()
@@ -60,6 +85,11 @@ public class EscapeMenu : MonoBehaviour
     private void OnResumeClicked()
     {
         this.Close();
+
+        if (!TankCharacterController.Instance.Alive)
+        {
+            LevelManager.Instance.ReloadLevel();
+        }
     }
 
     private void OnLobbyClicked()

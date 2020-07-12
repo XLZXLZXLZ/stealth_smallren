@@ -43,12 +43,16 @@ public class TankCharacterController : MonoBehaviour
     private Quaternion m_CurrentVisualRotation;
     private Vector3 m_OriginalKeyPosition;
     private Vector3 m_CurrentKeyPosition;
+    private bool m_Alive = true;
 
     private Rigidbody m_Rigidbody;
     private Animator m_Animator;
 
     public float MovementSpeed
         => m_Crouched ? m_MovementSpeedCrouch : m_MovementSpeed;
+
+    public bool Alive
+        => m_Alive;
 
     private void Start()
     {
@@ -79,6 +83,16 @@ public class TankCharacterController : MonoBehaviour
         this.ProcessMovement();
     }
 
+    public void Kill()
+    {
+        m_Alive = false;
+    }
+
+    public void Revive()
+    {
+        m_Alive = true;
+    }
+
     private void UpdateAnimator()
     {
         var visualRotationVector = m_CurrentVisualRotation * Vector3.forward;
@@ -86,6 +100,7 @@ public class TankCharacterController : MonoBehaviour
 
         m_Animator.SetFloat("ForwardSpeed", Mathf.Clamp(forwardSpeed / this.MovementSpeed, 0f, 1f));
         m_Animator.SetBool("Crouched", m_Crouched);
+        m_Animator.SetBool("Alive", this.Alive);
     }
 
     private void ProcessInput()
@@ -125,6 +140,12 @@ public class TankCharacterController : MonoBehaviour
 
         m_CameraTargetAngle.x = Mathf.Clamp(m_CameraTargetAngle.x, m_CameraMinPitch, m_CameraMaxPitch);
         m_CameraAngle = Vector2.Lerp(m_CameraAngle, m_CameraTargetAngle, Time.deltaTime * m_CameraSmoothing);
+
+        if (!this.Alive)
+        {
+            m_Crouched = false;
+            m_InputMovementVector = Vector3.zero;
+        }
     }
 
     private void ProcessCamera()
