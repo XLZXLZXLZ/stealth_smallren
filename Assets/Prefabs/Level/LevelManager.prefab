@@ -48,3 +48,5 @@ MonoBehaviour:
   m_Levels:
   - m_Name: Level 1's Name
     m_SceneName: Level1
+  - m_Name: Level 2's Name
+    m_SceneName: Level2

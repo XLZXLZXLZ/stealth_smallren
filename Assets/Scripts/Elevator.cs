@@ -5,6 +5,7 @@ using UnityEngine;
 public class Elevator : MonoBehaviour
 {
     public static Elevator ExitElevator;
+    public static Elevator PrevExitElevator;
 
     public float m_Speed;
     public float m_Acceleration;
@@ -159,6 +160,11 @@ public class Elevator : MonoBehaviour
             return;
         }
 
+        if (ExitElevator != this)
+        {
+            PrevExitElevator = ExitElevator;
+        }
+
         ExitElevator = this;
 
         m_Finished = true;
@@ -176,6 +182,7 @@ public class Elevator : MonoBehaviour
     {
         return m_LeftDoor1.IsFullyClosed && m_RightDoor1.IsFullyClosed && m_LeftDoor2.IsFullyClosed && m_RightDoor2.IsFullyClosed;
     }
+
     public void GoUp()
     {
         m_GoingUp = true;
@@ -209,5 +216,13 @@ public class Elevator : MonoBehaviour
         }
 
         m_TargetPosition = destination;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (PrevExitElevator == this)
+        {
+            Destroy(gameObject);
+        }
     }
 }
