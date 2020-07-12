@@ -430,14 +430,14 @@ MonoBehaviour:
   m_DefaultMusicType: 0
   m_Music:
   - m_MusicType: 0
-    m_Volume: 0.5
+    m_Volume: 0.25
     m_AudioSource: {fileID: 4896502329450629157}
     m_CurrentVolume: 0
   - m_MusicType: 1
-    m_Volume: 0.5
+    m_Volume: 0.25
     m_AudioSource: {fileID: 4896502330004075787}
     m_CurrentVolume: 0
   - m_MusicType: 2
-    m_Volume: 0.5
+    m_Volume: 0.25
     m_AudioSource: {fileID: 4712753174411855521}
     m_CurrentVolume: 0
