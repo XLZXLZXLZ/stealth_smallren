@@ -79,7 +79,7 @@ public class Prisoner : MonoBehaviour
             }
         }
 
-        if (!m_Escaped && m_ClosestEscape != null && Vector3.Distance(m_ClosestEscape.transform.position, transform.position) <= 0.5f)
+        if (!m_Escaped && m_ClosestEscape != null && Vector3.Distance(m_ClosestEscape.transform.position, transform.position) <= 1.15f)
         {
             m_Escaped = true;
             m_ClosestEscape.AddEscape();
