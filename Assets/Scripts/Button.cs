@@ -19,6 +19,8 @@ public class Button : MonoBehaviour
     public Material m_HintMaterial;
     public Material m_OnMaterial;
     public UnityEvent m_OnPressed;
+    public Light m_light;
+    public Color onColor;
 
     private bool m_Pressed;
     private int m_Presses;
@@ -111,6 +113,7 @@ public class Button : MonoBehaviour
         m_Presses++;
         m_Pressed = true;
         m_PressedTime = Time.time;
+        m_light.color = onColor;
 
         this.m_OnPressed?.Invoke();
         m_PressedSound?.Play();
